@@ -1,0 +1,61 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% FIXED 
+\documentclass[11pt]{article}
+\usepackage{graphicx}
+\pagestyle{empty}
+\setlength{\parskip}{0.25\baselineskip}
+\renewcommand{\title}[1]{{\noindent\large\bfseries#1\medskip\\}}
+\renewcommand{\author}[2]{{\noindent #1 \medskip\\ \small #2 \medskip\\}}
+\renewcommand\refname{}
+\usepackage[letterpaper,margin=20mm]{geometry}
+\usepackage{hyperref}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\title{Mapping the integration between Knowledge Domains in Theoretical and Quantitative Geography}
+\author{
+% Authors Names
+Juste Raimbault,\textsuperscript{1,2,3,4}
+}
+{
+% Authors Affiliations
+1. LaSTIG, Univ. Gustave Eiffel, IGN-ENSG\\
+2. CASA, UCL\\
+3. UPS CNRS 3611 ISC-PIF\\
+4. UMR CNRS 8504 G{\'e}ographie-cit{\'e}s\\
+}
+
+
+%TODO rq dev possible : sensitivity to classif systems / tagging / other knwoledge framework (arbitrary, non exhaustive?)
+
+% keywords Quantitative Epistemology ; Knowledge Domains ; Theoretical and Quantitative Geography
+
+
+
+% abstract long 400-800 words
+
+% Special session 6 : validation of spatial simulation models
+
+\vspace{-1cm}
+\noindent
+\textit{\textbf{Submission to ECTQG 2025 - Special Session 4: Theoretical Geography and the History of Geography}}
+
+\vspace{1cm}
+
+Theoretical and Quantitative Geography (TQG), since its inception in Europe in the 70s as a scientific current \cite{cuyala2015affirmation}, has always been motivated by a strong integration between quantitative studies (empirical or modeling) and theoretical constructions. \cite{livet2010ontology} have conceptualised, for activities implying modelling in social science in general, a strong integration between three Knowledge Domains, namely Theory, Empirical, and Modelling. This Knowledge Framework has been refined by \cite{raimbault2017applied} with the addition of other domains with a key importance in TQG: Data, Methods, and Tools. To what extent theories in TQG (in the sense of bodies of knowledge) effectively involve a variety of Knowledge Domains, and mobilises them in an integrated way to produce knowledge?
+
+We propose in this contribution to investigate this question for two case studies: Pumain's evolutionary theory for systems of cities \cite{pumain2018evolutionary} (which has been developed the last 30 years, is an example of a fruitful TQG approach, and is rather well delimited), and studies of Zipf's law for the size of cities \cite{cottineau2017metazipf} (with a longer history, and a less delimited context with several disciplines involved from economics to regional science, physics and geography). Starting from an initial corpus for each case (foundational papers for the Evolutionary Theory, and around fifty papers found by \cite{cottineau2017metazipf} in a systematic review), we reconstruct backward citation networks up to depth two using the bibilographic tools provided by \cite{raimbault2019exploration}. We use these citation networks as corpuses in which integration between knowledge domains is studied. Given the relatively small size of corpuses ($\simeq$100 and 500 papers), it is much robust to tag papers for knowledge domains by hand. With the annotated data, we can map interactions between knowledge domains within citations networks, and compute various indicators such as diversity of domains, or modularity in the network capturing how domains are integrated. We find less diversity for Zipf and a much stronger clustering into disciplines with their own use of knowledge domains (theoretical models only in economics for example), while the evolutionary theory witnesses an interdependancy between domains. Digging further into this case, we highlight specific papers focused solely on constructing a dataset or presenting a software, on which almost all of the final knowledge depends, confirming this high integration between knowledge domains.
+
+
+This contribution thus proposes a first approach in quantitative epistemology to investigate how different components of knowledge interact for the construction of integrated theories. We hypothesise that this aspect is typical in TQG, as our archetypal case study for TQG has shown compared to the more generic case study. Further work would be needed for a broader confirmation of this, with a more systematic mapping of disciplines, without an arbitrary focus on case studies. Sensitivity analysis to the initial definition of corpuses and to the construction of ctation network would also be needed in our case. Finally, an interesting development would be the development of Machine Learning methods to automatically tag papers into knowledge domains, with however a high requirement on classification quality.
+
+
+{\small
+%\linespread{1}\selectfont
+\bibliographystyle{apalike}
+\bibliography{biblio}
+}
+
+\end{document}
+
+
