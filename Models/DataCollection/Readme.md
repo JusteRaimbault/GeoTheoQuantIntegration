@@ -9,7 +9,8 @@
    * torpool java -jar torpool.jar 50 9050 --mongo
    * Collect citations [for evolth only]: java -jar bibliodata.jar --citation --mongo geotheoquantintegration 10000
      [ok in <12h]
-   * export : java -jar bibliodata.jar --database --export geotheoquantintegration ../../Data/Corpuses/evurbth -1 -1 2 false false "" -1 false
+   * Compute priorities: java -jar bibliodata.jar --database --priority geotheoquantintegration 2 [NOT USEFUL]
+   * export : java -jar bibliodata.jar --database --export geotheoquantintegration $EXPORTFILE [fixed export function: why was not working anymore since last Y? (urbsimdigtwins quantep)]
 
 
 
