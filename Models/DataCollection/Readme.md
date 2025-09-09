@@ -8,8 +8,8 @@
 - collect citation network
    * torpool java -jar torpool.jar 50 9050 --mongo
    * Collect citations: java -jar bibliodata.jar --citation --mongo geotheoquantintegration 10000
-     
-   * export : java -jar bibliodata.jar --database --export geotheoquantintegration $EXPORTFILE -1 -1 2 false "" -1
+   * Compute priorities: java -jar bibliodata.jar --database --priority geotheoquantintegration 2 [NOT USEFUL]
+   * export : java -jar bibliodata.jar --database --export geotheoquantintegration $EXPORTFILE [fixed export function: why was not working anymore since last Y? (urbsimdigtwins quantep)]
 
 
 
