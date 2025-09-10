@@ -220,6 +220,8 @@ $\rightarrow$ more general ongoing epistemological research on TQG: \cite{raimba
 
 %Starting from an initial corpus for each case (foundational papers for the Evolutionary Theory, and around fifty papers found by [Cottineau, 2017] in a systematic review), we reconstruct backward citation networks up to depth two using the bibilographic tools provided by [Raimbault, 2019]. We use these citation networks as corpuses in which integration between knowledge domains is studied.
 
+% EvUrbTh: 16333 nodes, 21775 edges ; core (deg > 2) : 1252 4950
+
 
 
 
@@ -233,27 +235,101 @@ $\rightarrow$ more general ongoing epistemological research on TQG: \cite{raimba
 
 % reflexion on using a ML approach - anyway would need training data (this could be a base corpus for a more systematic study) - pb: how to delineate TQG? using ECTQG proceedings!
 
+% Counts for evurbth: / 1252
+%      data empirical    method     model    theory      tool    NA
+%        2       208       108       387       456        17     74
+
+
+
 
 
 }
 
 
-\sframe{Results}{
+\sframe{Results: citation networks}{
+
+
+\begin{center}
+\includegraphics[width=0.48\linewidth]{../../../../Results/core_evurbth.png}
+\end{center}
+
+
+\footnotesize
+
+\textit{(Left) Evolutionary Urban Theory; (Right) Zipf}
+
+
+}
+
+\sframe{Results:community detection}{
+
+% intercommunity citations flows
+
+\begin{center}
+\includegraphics[width=0.48\linewidth]{../../../../Results/evurbth_communities-citations.png}
+\end{center}
+
+
+\footnotesize
+
+\textit{(Left) Evolutionary Urban Theory; (Right) Zipf}
+
+}
+
+
+\sframe{Results: KDs composition}{
+
+% bar stack of KDs proportions in each community
+
+\begin{center}
+\includegraphics[width=\linewidth]{../../../../Results/evurbth_proportions.png}
+\end{center}
+
+\footnotesize
+
+\textit{Composition of communities by Knowledge Domains for the Evolutionary Urban Theory}
+
+}
+
+
+\sframe{Results: KDs composition}{
+
+\begin{center}
+%\includegraphics[width=\linewidth]{../../../../Results/zipf_proportions.png}
+\end{center}
+
+\footnotesize
+
+\textit{Composition of communities by Knowledge Domains for the Zipf corpus}
+
+}
+
+
+\sframe{Results: modularities}{
 
 % With the annotated data, we can map interactions between knowledge domains within citations networks, and compute various indicators such as diversity of domains, or modularity in the network capturing how domains are integrated. We find less diversity for Zipf and a much stronger clustering into disciplines with their own use of knowledge domains (theoretical models only in economics for example), while the evolutionary theory witnesses an interdependancy between domains.
 
 
-
+% Evolth
+%   - communities 0.496  
+%   - domains 0.0723
+%   - null model -0.0008 +- 0.0049
 
 }
 
-\sframe{Results}{
+
+
+\sframe{Results: key papers}{
 
 % Digging further into this case, we highlight specific papers focused solely on constructing a dataset or presenting a software, on which almost all of the final knowledge depends, confirming this high integration between knowledge domains.
 
 
 % zoom into the EvolTh citation network
 
+\begin{center}
+\includegraphics[width=0.45\linewidth]{../../../../Results/zoom_evurbth_geodivercitydata.png}
+\includegraphics[width=0.45\linewidth]{../../../../Results/zoom_evurbth_openmole.png}
+\end{center}
 
 
 }
@@ -266,6 +342,8 @@ $\rightarrow$ more general ongoing epistemological research on TQG: \cite{raimba
 
 % This contribution thus proposes a first approach in quantitative epistemology to investigate how different components of knowledge interact for the construction of integrated theories. We hypothesise that this aspect is typical in TQG, as our archetypal case study for TQG has shown compared to the more generic case study. Further work would be needed for a broader confirmation of this, with a more systematic mapping of disciplines, without an arbitrary focus on case studies. Sensitivity analysis to the initial definition of corpuses and to the construction of ctation network would also be needed in our case. Finally, an interesting development would be the development of Machine Learning methods to automatically tag papers into knowledge domains, with however a high requirement on classification quality.
 
+
+% - autres mesures : centralité des differents domaines? (pour influence?)
 
 %\footnotesize
 
