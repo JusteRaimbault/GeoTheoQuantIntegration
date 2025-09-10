@@ -19,4 +19,6 @@
  * [simpopnet analysis: intro ni model ni methode -> empirique] -> reproducibility studies -> ?
  * [rq: a multiplier coms, avec titre flou et/ou fumeux -> bruit dans la cartographie! peut etre appris par l'algo?]
  * [rq : SR have a role of their own -> could empirically refine the KD typology with an endogenous one, by function? or interactions?]
+ * rq annot Zipf: much more difficult to guess in economy from the title!
+ * moreover, different use of models and empirical (less distinction) -> framework pas si generique? (cf reflexions extensions plus haut)
 

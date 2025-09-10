@@ -46,18 +46,50 @@ nodes=nodes[sapply(nodes$id,function(id){id%in%edges$from||id%in%edges$to}),]
 # not concluding!
 # -> imported basecorpus into bibliodata, construct the citation network the same way as evurbth
 
+#2.2 - Get core
+edge_file = '../../Data/Corpuses/zipf_links.csv'
+node_file = '../../Data/Corpuses/zipf.csv'
+edges <- read.csv(edge_file,sep=";",header=F,colClasses = c('character','character'))
+nodes <- as_tibble(read.csv(node_file,sep=";",stringsAsFactors = F,quote = '"',colClasses = rep('character',4)))
+nodes[,3]=as.numeric(unlist(nodes[,3])) # year
+nodes[,4]=as.numeric(unlist(nodes[,4])) # depth
+citation <- graph_from_data_frame(edges,vertices = nodes)
+citation = induced_subgraph(citation,which(components(citation)$membership==1))
+# need more filtering as everything was exported
+basenodes=V(citation)[V(citation)$name%in%basecorpus$id]
+keptvertices=basenodes
+adjs = adjacent_vertices(citation,basenodes,mode = 'in')
+for(adj in names(adjs)){
+  keptvertices=c(keptvertices,adjs[[adj]])
+  adjs2 = adjacent_vertices(citation,adjs[[adj]],mode = 'in')
+  for(adj2 in names(adjs2)){keptvertices=c(keptvertices,adjs2[[adj2]])}
+}
+keptvertices=unique(keptvertices)
+citation=induced_subgraph(citation,keptvertices)
+# keep at least degree 30 (included) (-> 858 to annotate)
+citationcorehigher = induced_subgraph(citation,which(degree(citation)>29))
+while(length(which(degree(citationcorehigher)==1))>0){citationcorehigher = induced_subgraph(citationcorehigher,which(degree(citationcorehigher)>1))}
 
+# export
+export_gml(citationcorehigher,'../../Data/Processed/core_zipf.gml')
+write.csv(data.frame(title=V(citationcorehigher)$title,id=V(citationcorehigher)$name,year=V(citationcorehigher)$year),file='../../Data/Corpuses/zipf_core.csv',row.names = F)
 
 
 #3 - Analysis
 
-  CORPUS='evurbth'
+  #CORPUS='evurbth'
+  CORPUS='zipf'
 
   # load annotated data
   g <- read_graph(file=paste0('../../Data/Processed/core_',CORPUS,'.gml'),format='gml')
   domains <- read_csv(paste0('../../Data/Corpuses/',CORPUS,'_core_KD-ANNOTATED.csv'),col_names = F,col_types = "cccc")
   V(g)$domain = unlist(domains[,4])
-  
+  if(CORPUS='zipf'){# no tool!
+    dom_fullnames=c("e"="empirical","th"="theory","mo"="model","me"="method","NA"="NA","d"="data")
+    V(g)$domain[is.na(V(g)$domain)]="NA"
+    V(g)$domain=dom_fullnames[V(g)$domain]
+    V(g)$domain[V(g)$domain=="NA"]=NA
+  }
   #3.1 - visu network -> gephi
 
 
