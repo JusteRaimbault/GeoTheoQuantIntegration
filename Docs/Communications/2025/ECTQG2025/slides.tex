@@ -30,7 +30,8 @@
 
 \date{11/09/2025\\
 \textbf{ECTQG 2025}\\
-Special Session: Theoretical Geography and the History of Geography}
+Special Session: Theoretical Geography\\
+and the History of Geography}
 
 \author{Juste Raimbault\textsuperscript{1,2,3,4}}
 \institute{\textsuperscript{1}LaSTIG, IGN-ENSG-UGE\\
@@ -107,35 +108,77 @@ Special Session: Theoretical Geography and the History of Geography}
 
 
 
-\sframe{}{
+\sframe{History of ECTQG}{
 
 % Theoretical and Quantitative Geography (TQG), since its inception in Europe in the 70s as a scientific current [Cuyala, 2015], has always been motivated by a strong integration between quantitative studies (empirical or modeling) and theoretical constructions.
 
 % -> illustration map Cuyala?
 
+\begin{center}
+	\includegraphics[height=0.8\textheight]{figures/Cuyala2016_img-2.png}
+\end{center}
+
+\footnotesize
+
+\textit{Diversity and integration of Theoretical and Quantitative Geography \cite{cuyala2016spatial}.}
+
 
 }
 
-\sframe{}{
+\sframe{Quantitative epistemology}{
 
 % autre illustration et pub pour CybergeoNetworks (et projets en cours)
 
 
+\begin{center}
+	\includegraphics[height=0.6\textheight]{../../../../../Cybergeo/Docs/arxiv/v2/fig6.jpg}
+\end{center}
+
+\footnotesize
+
+\textit{Spatialised bibliometrics as a tool for a more reflexive and open science: CybergeoNetworks project \cite{raimbault2021empowering}, continued into OpenJournalScope (currently submitted to FNSO).}
+
+\url{https://analytics.huma-num.fr/geographie-cites/cybergeonetworks/}
 
 }
 
-\sframe{}{
+\sframe{Knowledge domains}{
 
 % [Livet et al., 2010] have conceptualised, for activities implying modelling in social science in general, a strong integration between three Knowledge Domains, namely Theory, Empirical, and Modelling. This Knowledge Framework has been refined by [Raimbault, 2017] with the addition of other domains with a key importance in TQG: Data, Methods, and Tools.
 
 
+% slides before had white background -> convert
+%convert -density 150 -resize 1000x -background white -flatten ../../../../../../NetworksTerritories/CityNetwork/Docs/Papers/KnowledgeFramework/arxiv/v1/framework.pdf figures/framework.png
 
-% second slide with previous work on Denise's theory?
 
+\begin{center}
+	\includegraphics[height=0.55\textheight]{figures/Livet2010_Figure1.jpg}%\hspace{0.1cm}
+	\includegraphics[height=0.55\textheight]{figures/framework.png}
+\end{center}
+
+\medskip
+
+\textit{(Left) Knowledge framework for agent-based modelling by \cite{livet2010ontology}; (Right) Refinement with more Knowledge Domains (KDs) by \cite{raimbault2017applied}.}
 
 
 }
 
+\sframe{KDs in Pumain's Evolutionary Urban Theory}{
+
+% transparent background -> convert
+%convert -background white -flatten /home/JRaimbault/ComplexSystems/NetworksTerritories/CityNetwork/Docs/Communications/2017/CSDM2017/figures/openmoleslide.png figures/kd_evolth.png
+
+% second slide with previous work on Denise's theory?
+
+\begin{center}
+	\includegraphics[height=0.8\textheight]{figures/kd_evolth.png}
+\end{center}
+
+\footnotesize
+
+\cite{raimbault2017applied}
+
+}
 
 
 \sframe{Research objective}{
@@ -149,11 +192,11 @@ Special Session: Theoretical Geography and the History of Geography}
 
 
 
-$\rightarrow$ 
+$\rightarrow$ previous work on Pumain's Evolutionary Urban Theory \cite{pumain2018evolutionary} by \cite{raimbault2017applied} suggested an integration of KDs
 
 \medskip
 
-$\rightarrow$ 
+$\rightarrow$ more general ongoing epistemological research on TQG: \cite{raimbault2017co} (TheoQuant 2017), \cite{raimbault2017invisible} (ECTQG 2017), \cite{raimbault2018extracting} (CCS 2018), \cite{raimbault:halshs-02284848} (ECTQG 2019), \cite{raimbault:halshs-02441891} (CCS 2019)
 
 \bigskip
 
@@ -177,6 +220,8 @@ $\rightarrow$
 
 %Starting from an initial corpus for each case (foundational papers for the Evolutionary Theory, and around fifty papers found by [Cottineau, 2017] in a systematic review), we reconstruct backward citation networks up to depth two using the bibilographic tools provided by [Raimbault, 2019]. We use these citation networks as corpuses in which integration between knowledge domains is studied.
 
+% EvUrbTh: 16333 nodes, 21775 edges ; core (deg > 2) : 1252 4950
+
 
 
 
@@ -190,27 +235,101 @@ $\rightarrow$
 
 % reflexion on using a ML approach - anyway would need training data (this could be a base corpus for a more systematic study) - pb: how to delineate TQG? using ECTQG proceedings!
 
+% Counts for evurbth: / 1252
+%      data empirical    method     model    theory      tool    NA
+%        2       208       108       387       456        17     74
+
+
+
 
 
 }
 
 
-\sframe{Results}{
+\sframe{Results: citation networks}{
+
+
+\begin{center}
+\includegraphics[width=0.48\linewidth]{../../../../Results/core_evurbth.png}
+\end{center}
+
+
+\footnotesize
+
+\textit{(Left) Evolutionary Urban Theory; (Right) Zipf}
+
+
+}
+
+\sframe{Results:community detection}{
+
+% intercommunity citations flows
+
+\begin{center}
+\includegraphics[width=0.48\linewidth]{../../../../Results/evurbth_communities-citations.png}
+\end{center}
+
+
+\footnotesize
+
+\textit{(Left) Evolutionary Urban Theory; (Right) Zipf}
+
+}
+
+
+\sframe{Results: KDs composition}{
+
+% bar stack of KDs proportions in each community
+
+\begin{center}
+\includegraphics[width=\linewidth]{../../../../Results/evurbth_proportions.png}
+\end{center}
+
+\footnotesize
+
+\textit{Composition of communities by Knowledge Domains for the Evolutionary Urban Theory}
+
+}
+
+
+\sframe{Results: KDs composition}{
+
+\begin{center}
+%\includegraphics[width=\linewidth]{../../../../Results/zipf_proportions.png}
+\end{center}
+
+\footnotesize
+
+\textit{Composition of communities by Knowledge Domains for the Zipf corpus}
+
+}
+
+
+\sframe{Results: modularities}{
 
 % With the annotated data, we can map interactions between knowledge domains within citations networks, and compute various indicators such as diversity of domains, or modularity in the network capturing how domains are integrated. We find less diversity for Zipf and a much stronger clustering into disciplines with their own use of knowledge domains (theoretical models only in economics for example), while the evolutionary theory witnesses an interdependancy between domains.
 
 
-
+% Evolth
+%   - communities 0.496  
+%   - domains 0.0723
+%   - null model -0.0008 +- 0.0049
 
 }
 
-\sframe{Results}{
+
+
+\sframe{Results: key papers}{
 
 % Digging further into this case, we highlight specific papers focused solely on constructing a dataset or presenting a software, on which almost all of the final knowledge depends, confirming this high integration between knowledge domains.
 
 
 % zoom into the EvolTh citation network
 
+\begin{center}
+\includegraphics[width=0.45\linewidth]{../../../../Results/zoom_evurbth_geodivercitydata.png}
+\includegraphics[width=0.45\linewidth]{../../../../Results/zoom_evurbth_openmole.png}
+\end{center}
 
 
 }
@@ -223,6 +342,8 @@ $\rightarrow$
 
 % This contribution thus proposes a first approach in quantitative epistemology to investigate how different components of knowledge interact for the construction of integrated theories. We hypothesise that this aspect is typical in TQG, as our archetypal case study for TQG has shown compared to the more generic case study. Further work would be needed for a broader confirmation of this, with a more systematic mapping of disciplines, without an arbitrary focus on case studies. Sensitivity analysis to the initial definition of corpuses and to the construction of ctation network would also be needed in our case. Finally, an interesting development would be the development of Machine Learning methods to automatically tag papers into knowledge domains, with however a high requirement on classification quality.
 
+
+% - autres mesures : centralité des differents domaines? (pour influence?)
 
 %\footnotesize
 
