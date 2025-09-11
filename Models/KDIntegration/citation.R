@@ -88,7 +88,11 @@ write.csv(data.frame(title=V(citationcorehigher)$title,id=V(citationcorehigher)$
     dom_fullnames=c("e"="empirical","th"="theory","mo"="model","me"="method","NA"="NA","d"="data")
     V(g)$domain[is.na(V(g)$domain)]="NA"
     V(g)$domain=dom_fullnames[V(g)$domain]
+    domains$domain = V(g)$domain
     V(g)$domain[V(g)$domain=="NA"]=NA
+  }
+  if(CORPUS=='evurbth'){
+    domains$domain = domains$X4
   }
   table(V(g)$domain) # counts
   nrow(domains)-sum(table(V(g)$domain)) # NAs
@@ -147,10 +151,16 @@ write.csv(data.frame(title=V(citationcorehigher)$title,id=V(citationcorehigher)$
     filename = paste0('../../Results/',CORPUS,'_proportions.png'),width = 30,height=20,units = 'cm'
   )
   
-  # - diversity within modularity classes
+  # - diversity within modularity classes -> Herfindhal = 1-sum p_i^2
+  apply(props[2:7],MARGIN = 1,function(probas){1 - sum(unlist(probas)^2)})
   
+  # zipf
+  #  "CityScience" "CitySize" "Finance" "Method" "NEG"  "Other" "Simulation" "all" 
+  #  0.6820712 0.6147611 0.6844530 0.4963504 0.6185481 0.2448980 0.6900856 0.6678222
   
-  
+  # evurbth
+  # "ABM"  "CA"        "Complexity"   "GIS"  "LUTI"  "Other"   "Simpop"   "UrbanSystems" "all"
+  # 0.6563357 0.6179501 0.6667853 0.6235651 0.5872781 0.4863281 0.7042604 0.6463322 0.7024351
   
   # - modularity of KD classif (compared to shuffled and communities)
   doms = domains$X4
@@ -165,7 +175,30 @@ write.csv(data.frame(title=V(citationcorehigher)$title,id=V(citationcorehigher)$
   # zipf : -0.00117891 +- 0.004181261
   
   # - citation flow graphs between domains
+  d = ends(g,E(g))
+  d=as_tibble(d)
+  names(d)=c("from","to")
+  d = left_join(d,domains[,c("X2","domain")],by=c("from"="X2"))
+  d = left_join(d,domains[,c("X2","domain")],by=c("to"="X2"))
+  names(d)<-c("V1","V2","from","to")
+  ds = d%>% group_by(from,to) %>% summarise(weight=n())
   
+  summary_graph = graph_from_data_frame(ds,directed = T)
   
+  coords = layout_as_star(summary_graph)
+  set.seed(42)
+  coords = coords[sample.int(nrow(coords),size=nrow(coords)),]
+  V(summary_graph)$x = coords[,1]
+  V(summary_graph)$y = coords[,2]
+  #curve_multiple(summary_graph)
+  png(paste0('../../Results/',CORPUS,'_domaingraph.png'),width=20,height = 20, units='cm',res=300)
+  plot(
+    summary_graph,
+    edge.width = 10*E(summary_graph)$weight/max(E(summary_graph)$weight),
+    edge.curved=seq(-0.8, 0.8, length = ecount(summary_graph)),
+    vertex.frame.color = NA,
+    margin=0.2
+  )
+  dev.off()
   
   
