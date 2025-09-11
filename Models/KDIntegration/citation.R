@@ -84,12 +84,14 @@ write.csv(data.frame(title=V(citationcorehigher)$title,id=V(citationcorehigher)$
   g <- read_graph(file=paste0('../../Data/Processed/core_',CORPUS,'.gml'),format='gml')
   domains <- read_csv(paste0('../../Data/Corpuses/',CORPUS,'_core_KD-ANNOTATED.csv'),col_names = F,col_types = "cccc")
   V(g)$domain = unlist(domains[,4])
-  if(CORPUS='zipf'){# no tool!
+  if(CORPUS=='zipf'){# no tool!
     dom_fullnames=c("e"="empirical","th"="theory","mo"="model","me"="method","NA"="NA","d"="data")
     V(g)$domain[is.na(V(g)$domain)]="NA"
     V(g)$domain=dom_fullnames[V(g)$domain]
     V(g)$domain[V(g)$domain=="NA"]=NA
   }
+  table(V(g)$domain) # counts
+  nrow(domains)-sum(table(V(g)$domain)) # NAs
   #3.1 - visu network -> gephi
 
 
@@ -108,12 +110,22 @@ write.csv(data.frame(title=V(citationcorehigher)$title,id=V(citationcorehigher)$
     currentd=d[com$membership==c];dth=sort(currentd,decreasing = T)[10]
     show(data.frame(titles=V(g)$title[com$membership==c&d>dth],degree=d[com$membership==c&d>dth]))
   }
-  citcomnames = list('1'='CA','2'='ABM','3'='UrbanSystems','4'='GIS','5'='LUTI','6'='Complexity','7'='Simpop', '8'='Resilience','9'='GeoStruct','10'='NA')
+  if(CORPUS=='evurbth'){
+    citcomnames = list('1'='CA','2'='ABM','3'='UrbanSystems','4'='GIS','5'='LUTI','6'='Complexity','7'='Simpop', '8'='Resilience','9'='GeoStruct','10'='NA')
+  }
+  if(CORPUS=='zipf'){
+    citcomnames = list('1'='CitySize','2'='Method','3'='Simulation','4'='NEG','5'='Finance','6'='CityScience','7'='NA')
+  }
   comsizes=list()
   for(k in names(citcomnames)){comsizes[k]=length(which(com$membership==as.numeric(k)))}
   comsizes=unlist(comsizes)
-  largestcoms = names(sort(comsizes[comsizes>50],decreasing = T))
-  
+  if(CORPUS=='evurbth'){
+    largestcoms = names(sort(comsizes[comsizes>50],decreasing = T))
+  }
+  if(CORPUS=='zipf'){
+    largestcoms = names(sort(comsizes[comsizes>50],decreasing = T))
+  }
+   
   lp = getLogCitationFlows(g,com,largestcoms,citcomnames)
   
   heatmaply(lp,plot_method = "ggplot")#,file = '../../Results/$CORPUS_communities-citations.png')
@@ -121,7 +133,6 @@ write.csv(data.frame(title=V(citationcorehigher)$title,id=V(citationcorehigher)$
   # - proportion of KDs in each community
   V(g)$community = unlist(sapply(as.character(com$membership),function(k){if(k%in%largestcoms){citcomnames[k]}else{"Other"}}))
   
-  # - diversity within modularity classes
   d = tibble(domain=V(g)$domain,community=V(g)$community) %>% na.omit()
   props = d %>% group_by(community) %>%
     summarise(theory = sum(domain=='theory')/n(),model=sum(domain=='model')/n(),empirical=sum(domain=='empirical')/n(),
@@ -136,15 +147,25 @@ write.csv(data.frame(title=V(citationcorehigher)$title,id=V(citationcorehigher)$
     filename = paste0('../../Results/',CORPUS,'_proportions.png'),width = 30,height=20,units = 'cm'
   )
   
+  # - diversity within modularity classes
+  
+  
+  
   
   # - modularity of KD classif (compared to shuffled and communities)
   doms = domains$X4
   doms[is.na(doms)]="NA"
-  directedmodularity(doms,A) # evurbth = 0.07230344
+  directedmodularity(doms,A) # evurbth = 0.07230344 ; zipf = 0.06645351
   # null model
   null_mods = c()
   for(b in 1:100){null_mods=append(null_mods,directedmodularity(sample.int(6,nrow(A),replace = T),A))}
   mean(null_mods)
   sd(null_mods)
   # evurbth: -0.0008 +- 0.0049
-
+  # zipf : -0.00117891 +- 0.004181261
+  
+  # - citation flow graphs between domains
+  
+  
+  
+  
