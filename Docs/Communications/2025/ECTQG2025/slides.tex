@@ -196,13 +196,16 @@ $\rightarrow$ previous work on Pumain's Evolutionary Urban Theory \cite{pumain20
 
 \medskip
 
-$\rightarrow$ more general ongoing epistemological research on TQG: \cite{raimbault2017co} (TheoQuant 2017), \cite{raimbault2017invisible} (ECTQG 2017), \cite{raimbault2018extracting} (CCS 2018), \cite{raimbault:halshs-02284848} (ECTQG 2019), \cite{raimbault:halshs-02441891} (CCS 2019)
+%$\rightarrow$ more general ongoing epistemological research on TQG: \cite{raimbault2017co} (TheoQuant 2017), \cite{raimbault2017invisible} (ECTQG 2017), \cite{raimbault2018extracting} (CCS 2018), \cite{raimbault:halshs-02284848} (ECTQG 2019), \cite{raimbault:halshs-02441891} (CCS 2019), cite{raimbault:hal-04257814} (ECTQG 2023)
+
+$\rightarrow$ more general ongoing epistemological research on TQG: \cite{raimbault2017invisible} (ECTQG 2017),  \cite{raimbault:halshs-02284848} (ECTQG 2019), \cite{raimbault:hal-04257814} (ECTQG 2023)
+
 
 \bigskip
 
 \textbf{Research objective:}
 
-\textit{}
+\textit{Quantify some TQG corpuses in terms of knowledge domains, their use, diversity, and integration.}
 
 
 }
@@ -212,6 +215,11 @@ $\rightarrow$ more general ongoing epistemological research on TQG: \cite{raimba
 
 % Pumain’s evolutionary theory for systems of cities [Pumain, 2018] (which has been developed the last 30 years, is an example of a fruitful TQG approach, and is rather well delimited), and studies of Zipf’s law for the size of cities [Cottineau, 2017] (with a longer history, and a less delimited context with several disciplines involved from economics to regional science, physics and geography).
 
+\textbf{Corpus 1: } Pumain's evolutionary urban theory \cite{pumain2018evolutionary}, typical of a fruitful TQG approach (discipline: geography).
+
+\bigskip
+
+\textbf{Corpus 2: } studies of Zipf's law for the size of cities, important theme in TQG but studied by various disciplines (economics, regional science, geography, physics), constructed by \cite{cottineau2017metazipf}.
 
 
 }
@@ -222,6 +230,20 @@ $\rightarrow$ more general ongoing epistemological research on TQG: \cite{raimba
 
 % EvUrbTh: 16333 nodes, 21775 edges ; core (deg > 2) : 1252 4950
 % Zipf: 99756 nodes, 150611 edges ; core (deg >=30 !): 858 8143
+
+$\rightarrow$ start from an initial corpus: \cite{pumain1997pour} and \cite{sanders1997simpop}; 39 papers for Zipf listed by \cite{cottineau2017metazipf}.
+
+\bigskip
+
+$\rightarrow$ reconstruct backward citations networks at depth 2, using the open data collection tools developped by \cite{raimbault2019exploration}: (16333 nodes and 21775 edges for Ev. Urb. Th.; 99756 nodes and 150611 edges for Zipf).
+
+\bigskip
+
+$\rightarrow$ extract core network by removing nodes of low degree (thresholds 3 and 30).
+
+\bigskip
+
+$\rightarrow$ corpuses for analysis to be annotated for domains: (1252,4950) Ev. Urb. Th.; (858,8143) Zipf.
 
 
 
@@ -244,6 +266,25 @@ $\rightarrow$ more general ongoing epistemological research on TQG: \cite{raimba
 %        2       380        41       198       210 	27
 %
 
+$\rightarrow$ manually annotate each paper for its \textbf{main} knowledge domain.
+
+\bigskip
+
+$\rightarrow$ reviews and meta-analyses classified as ``theory''.
+
+\bigskip
+
+$\rightarrow$ machine learning approach not relevant with these corpus sizes.
+
+\bigskip
+
+Counts:
+
+\begin{tabular}{cccccccc}
+	& 	data & empirical  &  method   &  model   & theory   &   tool   & NA \\
+EUT	& 2    &   208   &    108    &   387    &   456   &     17   &  74 \\
+Zipf &   2    &   380     &   41    &   198    &   210 &  0 &  27 \\
+\end{tabular}
 
 
 
@@ -256,6 +297,7 @@ $\rightarrow$ more general ongoing epistemological research on TQG: \cite{raimba
 
 \begin{center}
 \includegraphics[width=0.48\linewidth]{../../../../Results/core_evurbth.png}
+\includegraphics[width=0.48\linewidth]{../../../../Results/core_zipf.png}
 \end{center}
 
 
@@ -272,6 +314,7 @@ $\rightarrow$ more general ongoing epistemological research on TQG: \cite{raimba
 
 \begin{center}
 \includegraphics[width=0.48\linewidth]{../../../../Results/evurbth_communities-citations.png}
+\includegraphics[width=0.48\linewidth]{../../../../Results/zipf_communities-citations.png}
 \end{center}
 
 
@@ -292,7 +335,7 @@ $\rightarrow$ more general ongoing epistemological research on TQG: \cite{raimba
 
 \footnotesize
 
-\textit{Composition of communities by Knowledge Domains for the Evolutionary Urban Theory}
+\textit{Composition of communities by Knowledge Domains for the EUT.}
 
 }
 
@@ -300,29 +343,69 @@ $\rightarrow$ more general ongoing epistemological research on TQG: \cite{raimba
 \sframe{Results: KDs composition}{
 
 \begin{center}
-%\includegraphics[width=\linewidth]{../../../../Results/zipf_proportions.png}
+  \includegraphics[width=\linewidth]{../../../../Results/zipf_proportions.png}
 \end{center}
 
 \footnotesize
 
-\textit{Composition of communities by Knowledge Domains for the Zipf corpus}
+\textit{Composition of communities by Knowledge Domains for the Zipf corpus.}
 
 }
 
 \sframe{Results: diversity}{
 
+%  evurbth
+% "ABM"  "CA"        "Complexity"   "GIS"  "LUTI"  "Other"   "Simpop"   "UrbanSystems" "all"
+ % 0.6563357 0.6179501 0.6667853 0.6235651 0.5872781 0.4863281 0.7042604 0.6463322 0.7024351
+  
+
 %  zipf
 %   "CityScience" "CitySize" "Finance" "Method" "NEG"  "Other" "Simulation" "all" 
 %  0.6820712 0.6147611 0.6844530 0.4963504 0.6185481 0.2448980 0.6900856 0.6678222
 
+Erfindahl diversity index, computed within each community:
 
+\[
+d = 1 - \sum_i p_i^2
+\]
+
+\bigskip
+
+\footnotesize
+
+EUT:
+
+\begin{tabular}{ccccccccc}
+  ABM & CA & Complexity & GIS & LUTI & Other & Simpop & UrbSys & all \\
+ 0.65 & 0.61 & 0.66& 0.62 & 0.58 & 0.48 & 0.70 & 0.64 & 0.70 \\
+\end{tabular}
+
+\bigskip
+
+Zipf:
+
+\begin{tabular}{cccccccc}
+  CityScience & CitySize & Finance & Method & NEG & Other & Simulation & all \\
+ 0.68 &  0.61 & 0.68 &  0.49 & 0.61 & 0.24 & 0.69 & 0.66 \\
+\end{tabular}
 
 
 }
 
+
 \sframe{Results: citation flows between domains}{
 
-/home/JRaimbault/ComplexSystems/QuantitativeEpistemology/GeoTheoQuantIntegration/Results/zipf_domaingraph.png
+
+\begin{center}
+  \includegraphics[width=0.48\linewidth]{../../../../Results/evurbth_domaingraph.png}
+  \includegraphics[width=0.48\linewidth]{../../../../Results/zipf_domaingraph.png}
+\end{center}
+
+
+\footnotesize
+
+\textit{(Left) Evolutionary Urban Theory; (Right) Zipf}
+
 
 }
 
@@ -342,11 +425,34 @@ $\rightarrow$ more general ongoing epistemological research on TQG: \cite{raimba
 %   - domains 0.06645351
 %   - null -0.00117891 +- 0.004181261
 
+Integration measured by modularity of knowledge domains:
+
+\bigskip
+
+EUT:
+
+\begin{itemize}
+	\item Optimal communities: 0.496
+	\item Knowledge domains: 0.0723
+	\item Null model (100 bootstrap shuffling): $-0.0008 \pm 0.0049$
+\end{itemize}
+
+\bigskip
+
+Zipf:
+
+\begin{itemize}
+	\item Optimal communities: 0.365
+	\item Knowledge domains: 0.0664
+	\item Null model: $-0.0011 \pm 0.0041$
+\end{itemize}
+
+
 }
 
 
 
-\sframe{Results: key papers}{
+\sframe{Results: key papers in the EUT}{
 
 % Digging further into this case, we highlight specific papers focused solely on constructing a dataset or presenting a software, on which almost all of the final knowledge depends, confirming this high integration between knowledge domains.
 
@@ -354,10 +460,11 @@ $\rightarrow$ more general ongoing epistemological research on TQG: \cite{raimba
 % zoom into the EvolTh citation network
 
 \begin{center}
-\includegraphics[width=0.45\linewidth]{../../../../Results/zoom_evurbth_geodivercitydata.png}
-\includegraphics[width=0.45\linewidth]{../../../../Results/zoom_evurbth_openmole.png}
+\includegraphics[width=0.5\linewidth]{../../../../Results/zoom_evurbth_geodivercitydata.png}
+\includegraphics[width=0.44\linewidth]{../../../../Results/zoom_evurbth_openmole.png}
 \end{center}
 
+Papers with a ``central'' role: tool paper \cite{reuillon2013openmole}, and ``data'' paper \cite{cura2017old}.
 
 }
 
@@ -372,11 +479,13 @@ $\rightarrow$ more general ongoing epistemological research on TQG: \cite{raimba
 
 % - autres mesures : centralité des differents domaines? (pour influence?)
 
-%\footnotesize
+\footnotesize
 
 \textbf{Contributions: }
 \begin{itemize}
-	\item 
+	\item First quantitative approach to how knowledge domains interact
+	\item Strong integration (low modularity) but still some structure (vs null model)
+	\item Different interactions for EUT and Zipf
 \end{itemize}
 
 % not needed as preliminary study?
@@ -385,13 +494,20 @@ $\rightarrow$ more general ongoing epistemological research on TQG: \cite{raimba
 %	\item 
 %\end{itemize}
 
+\smallskip
 
 \textbf{Perspectives: }
 
 \begin{itemize}
-	\item 
+	\item Machine learning models trained with the annotated data, for a systematic study of TQG (or more broadly urban science)
+	\item Sensitivity analysis to initial corpuses and annotation noise
+	\item Towards an endogenous construction of Knowledge Domains through functions of literature contributions?
+	\item Similar work in progress on systematic model decomposition and mapping across a corpus
 \end{itemize}
 
+\smallskip
+
+\textbf{Code and data: } \url{https://github.com/JusteRaimbault/GeoTheoQuantIntegration}
 
 }
 

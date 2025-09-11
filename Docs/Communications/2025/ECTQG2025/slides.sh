@@ -1,0 +1,2 @@
+pdfcompress build/slides.pdf ECTQG2025_SessionThGeo_Raimbault_Slides.pdf
+
