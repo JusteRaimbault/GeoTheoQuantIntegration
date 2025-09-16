@@ -29,7 +29,8 @@ TODO reorg repo into dedicated one
 
  * java -jar bibliodata.jar --database --import ../../Data/OriginCorpuses/Zipf.csv geotheoquantintegration 2 zipf
  * java -jar bibliodata.jar --citation --mongo geotheoquantintegration 10000
- * Stop after 12h~ -> remaining 2015
+ * Stop after 12h~ -> remaining 2015 [on 2025/09/10]
  * Export java -jar bibliodata.jar --database --export geotheoquantintegration ../../Data/Corpuses/zipf
+ * [2025/09/16] rename prelim corpus with date, relaunch data collection
 
 
