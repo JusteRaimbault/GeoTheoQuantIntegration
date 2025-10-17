@@ -1,5 +1,12 @@
 
-# Annotation process
+# Data collection for TheoQuant
+
+ -> https://thema.univ-fcomte.fr/theoq/fr/publications.php?menus=publications
+Full papers 1993 -> 2011 ; after 2015 only slides, no abstracts
+ -> collect abstract, title, year, author for 1993 -> 2011 (every two years) : clean html -> python
+
+
+# Annotation process for Zipf and EvUrbTh corpuses
 
  * Evolutionary Urban Theory: core network (degree > 2) of 1252
  * one class only: choice on what seems the main contribution
