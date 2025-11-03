@@ -1,7 +1,11 @@
 
-  Average Exact Match Accuracy: 0.2261 (+/- 0.0525)
-  Average Micro-F1 Score:     0.4652 (+/- 0.0304)
-  Average Macro-F1 Score:     0.1809 (+/- 0.0104)
-  Average Hamming Loss:       0.2826 (+/- 0.0220)
+  Zero-R Accuracy: 0.2522 (+/- 0.0709)
+  Zero-R Micro-F1 Score:     0.4720 (+/- 0.0615)
+  Zero-R Macro-F1 Score:     0.1752 (+/- 0.0161)
+  Average Exact Match Accuracy: 0.2391 (+/- 0.0567)
+  Average Micro-F1 Score:     0.4769 (+/- 0.0370)
+  Average Macro-F1 Score:     0.1881 (+/- 0.0110)
+  Average Hamming Loss:       0.2696 (+/- 0.0222)
+
 
 
