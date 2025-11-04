@@ -1,0 +1,23 @@
+
+
+Classifying Knowledge Domains of Theoretical and Quantitative Geography publications
+
+An important aspect of Theoretical and Quantitative Geography (TQG) is the intented strong integration of theory with modelling. The Knowledge Domains (KDs) proposed by (Livet et al., 2010) can be used to explore this property, by classifying TQG publications into the Theoretical, Modelling, and Empirical domains. This opens avenues to a systematic mapping of the role of theory in the TQG landscape. However, manual labelling is not achievable for large corpuses. We propose in this contribution to evaluate machine learning methods for an automatic classification of KDs in TQG publications. We use the corpus of TheoQuant proceedings (1993-2011, every two years), labelling manually 234 abstracts to obtain training data. Abstracts were first translated into English using the google translate API, as no French domain-specific language model was recently developped for scientific publications. We then use titles and abstracts concatenated for a multi-binary classification of KDs. A baseline model combining tf-idf with a logistic classifier is compared against the SciBERT language model (Beltagy et al., 2019), for a 5-fold cross-validation on the annotated corpus. We obtain a gain in F1-score from 0.48+-0.03 for the baseline to 0.71+-0.05, confirming the good performance of language model to classify scientific texts. This suggests future applications to larger corpuses, to systematically explore how knowledge is effectively produced in TQG.
+
+
+
+References
+
+Beltagy, I., Lo, K., & Cohan, A. (2019). SciBERT: A pretrained language model for scientific text. arXiv preprint arXiv:1903.10676.
+
+Livet, Pierre, et al. "Ontology, a Mediator for Agent-Based Modeling in Social Science." Journal of Artificial Societies and Social Simulation 13.1 (2010): 1-3.
+
+
+Paper
+
+Not included in thematic session
+
+Knowledge Domains ; Machine Learning ; SciBERT
+
+
+
