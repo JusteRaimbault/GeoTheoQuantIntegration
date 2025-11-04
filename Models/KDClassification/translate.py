@@ -1,5 +1,5 @@
 # python3 -m venv .venv
-# ./python3.venv/bin/pip install google-cloud-translate
+# .venv/bin/pip install google-cloud-translate
 # gcloud auth login
 # gcloud config set project $PROJECT (where translate API has been activated on https://console.cloud.google.com/)
 # gcloud auth application-default login
