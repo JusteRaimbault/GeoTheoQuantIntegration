@@ -1,0 +1,12 @@
+SciBERT Cross-Validation Complete. Average Scores:
+| Metric             | SciBERT Model (Mean)   |
+|:-------------------|:-----------------------|
+| loss               | 0.5685                 |
+| micro_f1           | 0.463                  |
+| macro_f1           | 0.1767                 |
+| exact_match_acc    | 0.2261                 |
+| hamming_loss       | 0.2935                 |
+| runtime            | 5.5346                 |
+| samples_per_second | 8.3282                 |
+| steps_per_second   | 0.5432  
+

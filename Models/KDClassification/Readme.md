@@ -4,3 +4,19 @@ Annotation:
  * to be robust, annotation by several experts?
 
 
+====
+Resources
+
+data from crossref?
+https://www.crossref.org/documentation/retrieve-metadata/simple-text-query/
+
+Scibert paper https://arxiv.org/pdf/1903.10676
+
+BERT https://github.com/google-research/bert
+SciBERT https://github.com/allenai/scibert/tree/master
+
+https://www.kaggle.com/code/vitouphy/using-scibert-for-multi-binary-classification
+
+https://consensus.app/search/llms-versus-traditional-classifiers/eG3LSKDzS3K0lp34nJBCnQ/
+ => seems to improve classification significantly
+
