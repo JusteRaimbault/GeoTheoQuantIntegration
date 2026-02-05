@@ -7,18 +7,26 @@ from sklearn.pipeline import Pipeline
 from sklearn.model_selection import KFold
 from sklearn.metrics import f1_score, accuracy_score, hamming_loss, precision_recall_curve, average_precision_score
 import matplotlib.pyplot as plt
-
+import logging, sys
 
 
 n_splits = 5
 seed = 42
+
+logfile = 'results/tfidf-logit_folds'+str(n_splits)+'_seed'+str(seed)+'.txt'
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+file_handler = logging.FileHandler(logfile, mode='w') # 'w' overwrites, 'a' appends
+logger.addHandler(file_handler)
+stream_handler = logging.StreamHandler(sys.stdout)
+logger.addHandler(stream_handler)
 
 label_cols = ['Empirical','Theoretical','Modelling','Methodological']
 
 df = pd.read_csv('corpus_ANNOTATED_TRANSLATED.csv')
 
 for col in label_cols:
-    print(col)
+    logger.info(col)
     df[col] = df[col].astype(int)
 
 df['text'] = df['Title'].fillna('') + ' ' + df['Abstract'].fillna('')
@@ -26,7 +34,7 @@ df['text'] = df['Title'].fillna('') + ' ' + df['Abstract'].fillna('')
 X = df['text']
 y = df[label_cols].values
 
-print('Class counts : '+str(y.sum(axis=0)))
+logger.info('Class counts : '+str(y.sum(axis=0)))
 
 pipeline = Pipeline([
     ('tfidf', TfidfVectorizer(
@@ -59,7 +67,7 @@ all_y_true = []
 all_y_probs = []
 
 for fold, (train_index, test_index) in enumerate(kf.split(X, y)):
-    print(f"\n\n--- Processing Fold {fold + 1}/{n_splits} ---")
+    logger.info(f"\n\n--- Processing Fold {fold + 1}/{n_splits} ---")
 
     X_train, X_test = X.iloc[train_index], X.iloc[test_index]
     y_train, y_test = y[train_index], y[test_index]
@@ -85,10 +93,10 @@ for fold, (train_index, test_index) in enumerate(kf.split(X, y)):
         coef = classifier.estimators_[i].coef_[0]
         top_indices = np.argsort(coef)[-10:][::-1]
         bottom_indices = np.argsort(coef)[:10]
-        print(f"\n--- Top 10 words for: {label} ---")
-        print([feature_names[j] for j in top_indices])
-        print(f"--- Bottom 10 words (Strongest 'NOT' predictors): ---")
-        print([feature_names[j] for j in bottom_indices])
+        logger.info(f"\n--- Top 10 words for: {label} ---")
+        logger.info([feature_names[j] for j in top_indices])
+        logger.info(f"--- Bottom 10 words (Strongest 'NOT' predictors): ---")
+        logger.info([feature_names[j] for j in bottom_indices])
 
     # Apply the model to test data
     #y_pred = pipeline.predict(X_test)
@@ -122,15 +130,15 @@ for fold, (train_index, test_index) in enumerate(kf.split(X, y)):
     #print(classification_report(y_test, y_pred, target_names=label_cols, zero_division=0))
 
 # Indicators
-print(f"\n\n\n--- Indicators ---")
-print(f"  Zero-R Accuracy: {np.mean(acc_zero_r):.4f} (+/- {np.std(acc_zero_r):.4f})")
-print(f"  Zero-R Micro-F1 Score:     {np.mean(f1_micro_zero_r):.4f} (+/- {np.std(f1_micro_zero_r):.4f})")
-print(f"  Zero-R Macro-F1 Score:     {np.mean(f1_macro_zero_r):.4f} (+/- {np.std(f1_macro_zero_r):.4f})")
+logger.info(f"\n\n\n--- Indicators ---")
+logger.info(f"  Zero-R Accuracy: {np.mean(acc_zero_r):.4f} (+/- {np.std(acc_zero_r):.4f})")
+logger.info(f"  Zero-R Micro-F1 Score:     {np.mean(f1_micro_zero_r):.4f} (+/- {np.std(f1_micro_zero_r):.4f})")
+logger.info(f"  Zero-R Macro-F1 Score:     {np.mean(f1_macro_zero_r):.4f} (+/- {np.std(f1_macro_zero_r):.4f})")
 
-print(f"  Average Exact Match Accuracy: {np.mean(accuracy_scores):.4f} (+/- {np.std(accuracy_scores):.4f})")
-print(f"  Average Micro-F1 Score:     {np.mean(f1_micro_scores):.4f} (+/- {np.std(f1_micro_scores):.4f})")
-print(f"  Average Macro-F1 Score:     {np.mean(f1_macro_scores):.4f} (+/- {np.std(f1_macro_scores):.4f})")
-print(f"  Average Hamming Loss:       {np.mean(hamming_scores):.4f} (+/- {np.std(hamming_scores):.4f})")
+logger.info(f"  Average Exact Match Accuracy: {np.mean(accuracy_scores):.4f} (+/- {np.std(accuracy_scores):.4f})")
+logger.info(f"  Average Micro-F1 Score:     {np.mean(f1_micro_scores):.4f} (+/- {np.std(f1_micro_scores):.4f})")
+logger.info(f"  Average Macro-F1 Score:     {np.mean(f1_macro_scores):.4f} (+/- {np.std(f1_macro_scores):.4f})")
+logger.info(f"  Average Hamming Loss:       {np.mean(hamming_scores):.4f} (+/- {np.std(hamming_scores):.4f})")
 
 
 
@@ -163,10 +171,10 @@ f1_scores = (2 * precision * recall) / (precision + recall + 1e-10)
 best_idx = np.argmax(f1_scores)
 best_threshold = thresholds[best_idx]
 best_f1 = f1_scores[best_idx]
-print(f"\n\n\n--- Global Optimal Threshold Results ---")
-print(f"Optimal Threshold: {best_threshold:.4f}")
-print(f"Max Micro-F1 Score: {best_f1:.4f}")
-print(f"Prevalence (Baseline): {np.mean(y_true_flat):.4f}")
+logger.info(f"\n\n\n--- Global Optimal Threshold Results ---")
+logger.info(f"Optimal Threshold: {best_threshold:.4f}")
+logger.info(f"Max Micro-F1 Score: {best_f1:.4f}")
+logger.info(f"Prevalence (Baseline): {np.mean(y_true_flat):.4f}")
 
 
 
