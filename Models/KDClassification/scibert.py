@@ -6,7 +6,7 @@ from sklearn.model_selection import KFold
 from datasets import Dataset
 from transformers import AutoTokenizer, AutoModelForSequenceClassification, TrainingArguments, Trainer
 from sklearn.metrics import f1_score, accuracy_score, hamming_loss
-import os
+import logging, sys
 
 FILE_NAME = 'corpus_ANNOTATED_TRANSLATED.csv'
 TEXT_COLUMN = 'text'
@@ -17,6 +17,17 @@ BATCH_SIZE = 16
 MAX_SEQ_LENGTH = 256
 RANDOM_STATE = 66
 N_SPLITS = 5
+
+logfile = 'results/scibert_folds'+str(N_SPLITS)+'_seed'+str(RANDOM_STATE)+'.txt'
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+file_handler = logging.FileHandler(logfile, mode='w') # 'w' overwrites, 'a' appends
+logger.addHandler(file_handler)
+stream_handler = logging.StreamHandler(sys.stdout)
+logger.addHandler(stream_handler)
+
+
+
 
 df = pd.read_csv(FILE_NAME)
 label_cols = ['Empirical','Theoretical','Modelling','Methodological']
@@ -61,8 +72,8 @@ kf = KFold(n_splits=N_SPLITS, shuffle=True, random_state=RANDOM_STATE)
 all_fold_metrics = []
 
 for fold, (train_index, test_index) in enumerate(kf.split(df)):
-    print(f"\n" + "="*60)
-    print(f"--- Fine-Tuning SciBERT: Fold {fold + 1}/{N_SPLITS} ---")
+    logger.info(f"\n\n\n" + "="*60)
+    logger.info(f"--- Fine-Tuning SciBERT: Fold {fold + 1}/{N_SPLITS} ---")
 
     train_dataset = tokenized_hg_dataset.select(train_index)
     test_dataset = tokenized_hg_dataset.select(test_index)
@@ -99,12 +110,12 @@ for fold, (train_index, test_index) in enumerate(kf.split(df)):
     trainer.train()
 
     eval_results = trainer.evaluate()
-    print("\nFold Evaluation Results:", eval_results)
+    logger.info("\nFold Evaluation Results:", eval_results)
 
     all_fold_metrics.append(eval_results)
 
-print("\n" + "="*80)
-print("SciBERT Cross-Validation Complete. Average Scores:")
+logger.info("\n\n\n" + "="*80)
+logger.info("SciBERT Cross-Validation Complete. Average Scores:")
 
 results_df = pd.DataFrame(all_fold_metrics)
 metric_cols = [col for col in results_df.columns if col.startswith('eval_')]
@@ -115,5 +126,5 @@ summary_data = {
 }
 
 summary_df = pd.DataFrame(summary_data).round(4)
-print(summary_df.to_markdown(index=False, numalign="left", stralign="left"))
-print("="*80)
+logger.info(summary_df.to_markdown(index=False, numalign="left", stralign="left"))
+logger.info("="*80)
