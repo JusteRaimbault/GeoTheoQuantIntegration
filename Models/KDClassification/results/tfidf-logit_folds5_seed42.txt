@@ -1,11 +1,138 @@
-
-  Zero-R Accuracy: 0.2522 (+/- 0.0709)
-  Zero-R Micro-F1 Score:     0.4720 (+/- 0.0615)
-  Zero-R Macro-F1 Score:     0.1752 (+/- 0.0161)
-  Average Exact Match Accuracy: 0.2391 (+/- 0.0567)
-  Average Micro-F1 Score:     0.4769 (+/- 0.0370)
-  Average Macro-F1 Score:     0.1881 (+/- 0.0110)
-  Average Hamming Loss:       0.2696 (+/- 0.0222)
+Empirical
+Theoretical
+Modelling
+Methodological
+Class counts : [125  40  56  78]
 
 
+--- Processing Fold 1/5 ---
 
+--- Top 10 words for: Empirical ---
+['urban', 'changes', 'quot', 'areas', 'risk', 'diffusion', 'indicators', 'article presents', 'region', '39']
+--- Bottom 10 words (Strongest 'NOT' predictors): ---
+['models', 'decision', 'concepts', 'knowledge', 'geography', 'decision support', 'geographical', 'environment', 'modeling', 'landscape']
+
+--- Top 10 words for: Theoretical ---
+['concepts', 'geography', 'cooperation', 'geographical', 'landscape', 'spatial analysis', 'object', 'concept', 'territory', 'differentiation']
+--- Bottom 10 words (Strongest 'NOT' predictors): ---
+['quot', 'network', 'areas', 'urban', 'method', 'mobility', 'variables', 'regional', 'changes', 'agricultural']
+
+--- Top 10 words for: Modelling ---
+['model', 'housing', 'models', 'simulation', 'modeling', 'noise', 'regional', 'public', 'effects', 'network']
+--- Bottom 10 words (Strongest 'NOT' predictors): ---
+['study', 'quot', 'scale', 'concepts', 'variables', 'landscape', 'environment', 'land', 'data', 'management']
+
+--- Top 10 words for: Methodological ---
+['variables', 'method', 'expert', 'representations', 'different', 'resolution', 'point', 'data', 'theory', 'land']
+--- Bottom 10 words (Strongest 'NOT' predictors): ---
+['model', 'image', 'geography', 'risk', 'analysis', 'models', 'housing', 'modeling', 'employment', 'landscape']
+
+
+--- Processing Fold 2/5 ---
+
+--- Top 10 words for: Empirical ---
+['urban', 'quot', 'changes', 'analysis', 'presents', 'region', 'article presents', 'maps', 'diffusion', 'areas']
+--- Bottom 10 words (Strongest 'NOT' predictors): ---
+['decision', 'models', 'energy', 'concepts', 'knowledge', 'landscape', 'geographical', 'public', 'geography', 'elements']
+
+--- Top 10 words for: Theoretical ---
+['geography', 'concepts', 'risk', 'systems', 'geographical', 'concept', 'roman', 'object', 'territorial', 'assessment']
+--- Bottom 10 words (Strongest 'NOT' predictors): ---
+['quot', 'areas', 'network', 'urban', 'model', 'networks', 'regional', 'agricultural', 'presents', 'changes']
+
+--- Top 10 words for: Modelling ---
+['model', 'simulation', 'models', 'modeling', 'accessibility', 'travel', 'simulations', 'public', 'network', 'slope']
+--- Bottom 10 words (Strongest 'NOT' predictors): ---
+['information', 'scale', 'quot', 'geographic', 'expert', 'environment', 'knowledge', 'study', 'present', 'assessment']
+
+--- Top 10 words for: Methodological ---
+['expert', 'method', 'theory', 'data', 'land', 'variables', 'parking', 'knowledge', 'maps', 'resolution']
+--- Bottom 10 words (Strongest 'NOT' predictors): ---
+['model', 'models', 'analysis', 'simulation', 'risk', 'image', 'border', 'geography', 'cultural', 'employment']
+
+
+--- Processing Fold 3/5 ---
+
+--- Top 10 words for: Empirical ---
+['urban', 'maps', 'analysis', 'region', 'presents', 'article presents', 'diffusion', 'changes', 'cultural', 'quot']
+--- Bottom 10 words (Strongest 'NOT' predictors): ---
+['spatial', 'geography', 'decision', 'models', 'landscape', 'objects', 'environment', 'object', 'tourist', 'public']
+
+--- Top 10 words for: Theoretical ---
+['geography', 'cooperation', 'territorial', 'risk', 'geographical', 'spatial analysis', 'spatial', 'roman', 'object', 'space']
+--- Bottom 10 words (Strongest 'NOT' predictors): ---
+['urban', 'network', 'variables', 'quot', 'regional', 'agricultural', 'statistical', 'presents', 'maps', 'mobility']
+
+--- Top 10 words for: Modelling ---
+['model', 'simulation', 'modeling', 'models', 'noise', 'accessibility', 'simulations', 'public', 'housing', 'network']
+--- Bottom 10 words (Strongest 'NOT' predictors): ---
+['39', 'scale', 'quot', 'geographic', 'data', 'information', 'environment', 'analysis', 'study', 'territorial']
+
+--- Top 10 words for: Methodological ---
+['expert', 'mobility', 'variables', 'data', 'information', 'method', 'quot', 'maps', 'representations', 'geographic information']
+--- Bottom 10 words (Strongest 'NOT' predictors): ---
+['model', 'risk', 'image', 'geography', 'border', 'models', 'landscape', 'simulation', 'cultural', 'factors']
+
+
+--- Processing Fold 4/5 ---
+
+--- Top 10 words for: Empirical ---
+['urban', 'region', 'agricultural', 'quot', 'presents', 'diffusion', 'article presents', 'changes', 'france', 'noise']
+--- Bottom 10 words (Strongest 'NOT' predictors): ---
+['concepts', 'energy', 'models', 'geographical', 'objects', 'environment', 'object', 'decision', 'space', 'tourist']
+
+--- Top 10 words for: Theoretical ---
+['concepts', 'geographical', 'geography', 'cooperation', 'territory', 'space', 'object', 'landscape', 'spatial analysis', 'differentiation']
+--- Bottom 10 words (Strongest 'NOT' predictors): ---
+['urban', 'quot', 'regional', 'network', 'results', 'mobility', 'areas', 'different', 'variables', 'statistical']
+
+--- Top 10 words for: Modelling ---
+['model', 'simulation', 'modeling', 'accessibility', 'effects', 'models', 'public', 'effect', 'simulations', 'housing']
+--- Bottom 10 words (Strongest 'NOT' predictors): ---
+['quot', 'geographic', 'information', 'concepts', 'scale', 'land', 'environment', 'representations', 'data', 'management']
+
+--- Top 10 words for: Methodological ---
+['expert', 'variables', 'resolution', 'mobility', 'theory', 'representations', 'geographic', 'data', 'tool', 'method']
+--- Bottom 10 words (Strongest 'NOT' predictors): ---
+['model', 'image', 'geographical', 'factors', 'models', 'border', 'organization', 'modeling', 'spatial', 'simulation']
+
+
+--- Processing Fold 5/5 ---
+
+--- Top 10 words for: Empirical ---
+['urban', 'region', 'changes', 'quot', 'maps', 'study', 'cultural', 'analysis', 'variability', 'events']
+--- Bottom 10 words (Strongest 'NOT' predictors): ---
+['geography', 'decision', 'concepts', 'models', 'energy', 'spatial', 'geographical', 'objects', 'environment', 'graph']
+
+--- Top 10 words for: Theoretical ---
+['geography', 'concepts', 'risk', 'cooperation', 'landscape', 'geographical', 'territory', 'spatial analysis', 'space', 'territorial']
+--- Bottom 10 words (Strongest 'NOT' predictors): ---
+['quot', 'urban', 'regional', 'agricultural', 'variables', 'areas', 'maps', 'expert', 'network', 'method']
+
+--- Top 10 words for: Modelling ---
+['model', 'simulation', 'models', 'noise', 'housing', 'simulations', 'diffusion', 'agent', 'multi agent', 'modeling']
+--- Bottom 10 words (Strongest 'NOT' predictors): ---
+['quot', 'risk', 'scale', 'environment', 'organization', 'concepts', 'agricultural', 'expert', 'geographic', 'analysis']
+
+--- Top 10 words for: Methodological ---
+['expert', 'method', 'data', 'variables', 'quot', 'maps', 'map', 'agricultural', 'parking', 'activity']
+--- Bottom 10 words (Strongest 'NOT' predictors): ---
+['model', 'landscape', 'models', 'projects', 'geographical', 'border', 'cultural', 'image', 'simulation', 'diffusion']
+
+
+
+--- Indicators ---
+  Zero-R Accuracy: 0.2522 (+/- 0.0560)
+  Zero-R Micro-F1 Score:     0.4719 (+/- 0.0649)
+  Zero-R Macro-F1 Score:     0.1752 (+/- 0.0168)
+  Average Exact Match Accuracy: 0.2739 (+/- 0.0560)
+  Average Micro-F1 Score:     0.5910 (+/- 0.0176)
+  Average Macro-F1 Score:     0.4053 (+/- 0.0827)
+  Average Hamming Loss:       0.3000 (+/- 0.0417)
+
+
+
+--- Global Optimal Threshold Results ---
+Optimal Threshold: 0.2659
+Max Micro-F1 Score: 0.5926
+Prevalence (Baseline): 0.3250
