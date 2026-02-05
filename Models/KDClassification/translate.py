@@ -1,7 +1,7 @@
 # python3 -m venv .venv
 # .venv/bin/pip install google-cloud-translate
 # gcloud auth login
-# gcloud config set project $PROJECT (where translate API has been activated on https://console.cloud.google.com/)
+# gcloud config set project $PROJECT (where translate API has been activated on https://console.cloud.google.com/) ! check billing account associated to project and ideally stay below free usage limits https://console.cloud.google.com/billing
 # gcloud auth application-default login
 from google.cloud import translate_v2 as translate
 import pandas,csv

@@ -1,3 +1,10 @@
+
+
+TODO 06/11
+Todo theoquant revoir annot, guidelines precises avant, lire article en entier ; rebalanced classes?
+
+====
+
 Annotation: 
  * quelques abstracts sont data/tools, mais trop peu -> unbalance -> annotate for Empirical, Theoretical, Modelling, EMthodological only
  * choice model/method not easy (! terminology) -> reclarify and check
