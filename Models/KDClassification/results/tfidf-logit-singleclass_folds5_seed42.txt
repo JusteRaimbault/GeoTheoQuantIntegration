@@ -1,0 +1,42 @@
+Class distribution after filtering:
+label
+theory       456
+model        387
+empirical    208
+method       108
+Name: count, dtype: int64
+Fold 1 | Acc: 0.672 | Macro-F1: 0.630
+Top words for empirical: ['el', 'case', 'french', 'la', 'villes']
+Top words for method: ['behaviour', 'models', 'comparison', 'prospective', 'sensitivity']
+Top words for model: ['based', 'modeling', 'simulating', 'using', 'model']
+Top words for theory: ['sciences', 'theory', 'géographie', 'models', 'review']
+Fold 2 | Acc: 0.690 | Macro-F1: 0.633
+Top words for empirical: ['analysis', 'el', 'spatial analysis', 'case', 'villes']
+Top words for method: ['method', 'simulation', 'comparison', 'sensitivity', 'models']
+Top words for model: ['growth', 'using', 'simulating', 'based', 'model']
+Top words for theory: ['complexity', 'la', 'science', 'models', 'review']
+Fold 3 | Acc: 0.638 | Macro-F1: 0.574
+Top words for empirical: ['und', 'la', 'case', 'villes', 'french']
+Top words for method: ['method', 'prospective', 'behaviour', 'models', 'comparison']
+Top words for model: ['modeling', 'growth', 'simulating', 'based', 'model']
+Top words for theory: ['géographie', 'systems', 'challenges', 'models', 'review']
+Fold 4 | Acc: 0.634 | Macro-F1: 0.568
+Top words for empirical: ['sistema', 'case', 'spatial analysis', 'china', 'villes']
+Top words for method: ['simulations', 'comparison', 'behaviour', 'sensitivity', 'models']
+Top words for model: ['urban growth', 'using', 'multi', 'simulating', 'model']
+Top words for theory: ['theory', 'la', 'géographie', 'science', 'review']
+Fold 5 | Acc: 0.615 | Macro-F1: 0.566
+Top words for empirical: ['du', 'europe', 'el', 'case', 'villes']
+Top words for method: ['simulation', 'models', 'behaviour', 'comparison', 'sensitivity']
+Top words for model: ['based', 'growth', 'using', 'simulating', 'model']
+Top words for theory: ['challenges', 'science', 'la', 'models', 'review']
+
+
+
+--- Indicators ---
+Metric          | TF-IDF Mean (Std)    | ZeroR Mean
+--------------------------------------------------
+accuracy        | 0.650 (+/- 0.027) | 0.393
+f1_macro        | 0.594 (+/- 0.031) | 0.141
+f1_weighted     | 0.650 (+/- 0.027) | 0.223
+==================================================

@@ -1,24 +1,34 @@
-# .venv/bin/pip install torch transformers datasets scikit-learn pandas accelerate -U
+# If venv not initialised : python -m venv .venv
+# .venv/bin/pip install matplotlib torch transformers datasets scikit-learn pandas accelerate -U
+#source .venv/bin/activate
 import pandas as pd
 import numpy as np
 import torch
+import torch.nn as nn
 from sklearn.model_selection import KFold
 from datasets import Dataset
-from transformers import AutoTokenizer, AutoModelForSequenceClassification, TrainingArguments, Trainer
-from sklearn.metrics import f1_score, accuracy_score, hamming_loss
-import logging, sys
+from transformers import AutoTokenizer, AutoModelForSequenceClassification, TrainingArguments, Trainer, EarlyStoppingCallback
+from sklearn.metrics import f1_score, accuracy_score, hamming_loss, precision_recall_curve
+import shap
+import logging, sys, tempfile, shutil
+import matplotlib.pyplot as plt
 
 FILE_NAME = 'corpus_ANNOTATED_TRANSLATED.csv'
 TEXT_COLUMN = 'text'
 MODEL_NAME = 'allenai/scibert_scivocab_uncased'
-NUM_TRAIN_EPOCHS = 3
+
+# parameters
+NUM_TRAIN_EPOCHS = 10
 LEARNING_RATE = 2e-5
 BATCH_SIZE = 16
-MAX_SEQ_LENGTH = 256
-RANDOM_STATE = 66
+MAX_SEQ_LENGTH = 128
 N_SPLITS = 5
+RANDOM_STATE = 42
 
-logfile = 'results/scibert_folds'+str(N_SPLITS)+'_seed'+str(RANDOM_STATE)+'.txt'
+resfile = ('results/scibert_epochs'+str(NUM_TRAIN_EPOCHS)+'_lrate'+
+           str(LEARNING_RATE)+'_batch'+str(BATCH_SIZE)+'_seqlength'+str(MAX_SEQ_LENGTH)+
+           '_folds'+str(N_SPLITS)+'_seed'+str(RANDOM_STATE))
+logfile = resfile+'.txt'
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 file_handler = logging.FileHandler(logfile, mode='w') # 'w' overwrites, 'a' appends
@@ -26,9 +36,9 @@ logger.addHandler(file_handler)
 stream_handler = logging.StreamHandler(sys.stdout)
 logger.addHandler(stream_handler)
 
+temp_run_dir = tempfile.mkdtemp()
 
-
-
+# Load data
 df = pd.read_csv(FILE_NAME)
 label_cols = ['Empirical','Theoretical','Modelling','Methodological']
 NUM_LABELS = len(label_cols)
@@ -54,22 +64,15 @@ columns_to_remove = [TEXT_COLUMN] + label_cols
 tokenized_hg_dataset = hg_dataset.map(tokenize_function, batched=True, remove_columns=columns_to_remove)
 
 
-def compute_metrics(p):
-    predictions = p.predictions[0] if isinstance(p.predictions, tuple) else p.predictions
-    labels = p.label_ids
-
-    preds = (torch.sigmoid(torch.from_numpy(predictions)) > 0.5).numpy().astype(int)
-
-    micro_f1 = f1_score(labels, preds, average='micro', zero_division=0)
-    macro_f1 = f1_score(labels, preds, average='macro', zero_division=0)
-    exact_match = accuracy_score(labels, preds)
-    hamming = hamming_loss(labels, preds)
-
-    return {'micro_f1': micro_f1,'macro_f1': macro_f1,'exact_match_acc': exact_match,'hamming_loss': hamming}
 
 
 kf = KFold(n_splits=N_SPLITS, shuffle=True, random_state=RANDOM_STATE)
-all_fold_metrics = []
+
+acc_scores = []
+micro_f1_scores = []
+macro_f1_scores = []
+hamming_losses = []
+best_thresholds = []
 
 for fold, (train_index, test_index) in enumerate(kf.split(df)):
     logger.info(f"\n\n\n" + "="*60)
@@ -85,7 +88,7 @@ for fold, (train_index, test_index) in enumerate(kf.split(df)):
     )
 
     training_args = TrainingArguments(
-        output_dir=f"./results_scibert_fold{fold+1}",
+        output_dir=temp_run_dir,
         per_device_train_batch_size=BATCH_SIZE,
         per_device_eval_batch_size=BATCH_SIZE,
         num_train_epochs=NUM_TRAIN_EPOCHS,
@@ -94,7 +97,6 @@ for fold, (train_index, test_index) in enumerate(kf.split(df)):
         logging_strategy="no",
         save_strategy="no",
         load_best_model_at_end=False,
-        metric_for_best_model='micro_f1',
         seed=RANDOM_STATE
     )
 
@@ -103,28 +105,76 @@ for fold, (train_index, test_index) in enumerate(kf.split(df)):
         args=training_args,
         train_dataset=train_dataset,
         eval_dataset=test_dataset,
-        compute_metrics=compute_metrics,
-        tokenizer=tokenizer,
+        tokenizer=tokenizer#,
+        #callbacks=[EarlyStoppingCallback(early_stopping_patience=3)]
     )
 
     trainer.train()
 
-    eval_results = trainer.evaluate()
-    logger.info("\nFold Evaluation Results:", eval_results)
+    # find optimal threshold
+    val_predictions = trainer.predict(test_dataset)
+    logits = val_predictions.predictions
+    probs = nn.functional.sigmoid(torch.tensor(logits)).numpy()
+    y_true = np.array(test_dataset["labels"])
+    precision, recall, thresholds = precision_recall_curve(y_true.ravel(), probs.ravel())
+    f1_scores = (2 * precision * recall) / (precision + recall + 1e-10)
+    best_threshold = thresholds[np.argmax(f1_scores)]
+    y_pred = (probs >= best_threshold).astype(int)
 
-    all_fold_metrics.append(eval_results)
+    fold_acc = accuracy_score(y_true, y_pred)
+    fold_f1_micro = f1_score(y_true, y_pred, average='micro')
+    fold_f1_macro = f1_score(y_true, y_pred, average='macro')
+    fold_hamming = hamming_loss(y_true, y_pred)
+    logger.info( f"Fold {fold + 1} | Acc: {fold_acc:.3f} | Micro-F1: {fold_f1_micro:.3f} | Macro-F1: {fold_f1_macro:.3f} | Hamming: {fold_hamming:.3f}")
+    acc_scores.append(fold_acc)
+    micro_f1_scores.append(fold_f1_micro)
+    macro_f1_scores.append(fold_f1_macro)
+    hamming_losses.append(fold_hamming)
+    best_thresholds.append(best_threshold)
+
+
+# SHAP interpretation for a sample in the last fold
+def model_predict(texts):
+    encoded = tokenizer(texts.tolist(), return_tensors="pt", padding=True, truncation=True).to(model.device)
+    with torch.no_grad():
+        outputs = model(**encoded)
+    return torch.sigmoid(outputs.logits).cpu().numpy()
+
+explainer = shap.Explainer(model_predict, tokenizer)
+shap_values = explainer(df.iloc[test_index]['text'].iloc[:5].values)
+plt.figure(figsize=(10, 6))
+shap.plots.bar(shap_values[0, :, 0], show=False) # Explain the first label for the first paper in the sample
+plt.title(f"SHAP Importance: {label_cols[0]}")
+plt.savefig(resfile+".png", bbox_inches='tight')
+plt.close()
+
+
+# Output metrics
 
 logger.info("\n\n\n" + "="*80)
 logger.info("SciBERT Cross-Validation Complete. Average Scores:")
 
-results_df = pd.DataFrame(all_fold_metrics)
-metric_cols = [col for col in results_df.columns if col.startswith('eval_')]
-
-summary_data = {
-    'Metric': [col.replace('eval_', '') for col in metric_cols],
-    'SciBERT Model (Mean)': [results_df[col].mean() for col in metric_cols]
+metrics = {
+    "Accuracy": acc_scores,
+    "Micro-F1":          micro_f1_scores,
+    "Macro-F1":          macro_f1_scores,
+    "Hamming Loss":      hamming_losses
 }
 
-summary_df = pd.DataFrame(summary_data).round(4)
-logger.info(summary_df.to_markdown(index=False, numalign="left", stralign="left"))
-logger.info("="*80)
+logger.info("="*40)
+logger.info(f"{'Metric':<20} | {'Mean':<8} | {'Std Dev':<8}")
+logger.info("-"*40)
+
+for name, scores in metrics.items():
+    mean_val = np.mean(scores)
+    std_val = np.std(scores)
+    logger.info(f"{name:<20} | {mean_val:.4f}   | {std_val:.4f}")
+
+logger.info("="*40)
+
+logger.info(f"Optimal Threshold used in last fold: {np.mean(best_thresholds):.4f} +-{np.std(best_thresholds):.4f} ")
+
+shutil.rmtree(temp_run_dir)
+
+
+
