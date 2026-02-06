@@ -56,13 +56,15 @@ def compute_metrics(eval_pred):
     predictions = np.argmax(logits, axis=-1)
     return {
         "accuracy": accuracy_score(labels, predictions),
-        "f1_macro": f1_score(labels, predictions, average='macro')
+        "f1_macro": f1_score(labels, predictions, average='macro'),
+        "f1_weighted": f1_score(labels, predictions, average='weighted')
     }
 
 
 kf = KFold(n_splits=N_SPLITS, shuffle=True, random_state=SEED)
 tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
-results = {"scibert_acc": [], "scibert_f1": [], "zeror_acc": []}
+results = {"scibert_accuracy": [], "scibert_f1_macro": [], "scibert_f1_weighted": [],
+           "zeror_accuracy": [], "zeror_f1_macro": [], "zeror_f1_weighted": []}
 
 for fold, (train_idx, test_idx) in enumerate(kf.split(df)):
     train_ds = Dataset.from_pandas(df.iloc[train_idx]).map(
@@ -99,13 +101,25 @@ for fold, (train_idx, test_idx) in enumerate(kf.split(df)):
     preds_out = trainer.predict(test_ds)
     probs = nn.functional.softmax(torch.tensor(preds_out.predictions), dim=-1).numpy()
     y_pred = np.argmax(probs, axis=-1)
-    y_true = df.iloc[test_idx]['labels'].values
+    y_true = df.iloc[test_idx]['label'].values
 
-    zr = DummyClassifier(strategy="most_frequent").fit(df.iloc[train_idx]['text'], y_true)  # Simplified fit
+    X_train, X_test = X.iloc[train_idx], X.iloc[test_idx]
+    y_train, y_test = y.iloc[train_idx], y.iloc[test_idx]
+    zeror = DummyClassifier(strategy="most_frequent")
+    zeror.fit(X_train, y_train)
+    y_zeror = zeror.predict(X_test)
 
-    results["scibert_acc"].append(accuracy_score(y_true, y_pred))
-    results["scibert_f1"].append(f1_score(y_true, y_pred, average='macro'))
-    results["zeror_acc"].append(accuracy_score(y_true, zr.predict(df.iloc[test_idx]['text'])))
+    results["scibert_accuracy"].append(accuracy_score(y_true, y_pred))
+    results["scibert_f1_macro"].append(f1_score(y_true, y_pred, average='macro'))
+    results["scibert_f1_weighted"].append(f1_score(y_true, y_pred, average='weighted'))
+    results["zeror_accuracy"].append(accuracy_score(y_test, y_zeror))
+    results["zeror_f1_macro"].append(f1_score(y_test, y_zeror, average='macro'))
+    results["zeror_f1_weighted"].append(f1_score(y_test, y_zeror, average='weighted'))
 
-logger.info(f"SciBERT Acc: {np.mean(results['scibert_acc']):.4f} (+/- {np.std(results['scibert_acc']):.4f})")
-logger.info(f"ZeroR Acc:   {np.mean(results['zeror_acc']):.4f}")
+logger.info(f"\n\n\n--- Indicators ---")
+logger.info(f"{'Metric':<15} | {'Mean (Std)':<20} ")
+logger.info("-"*50)
+
+for m, values in results.items():
+    logger.info(f"{m:<15} | {np.mean(results[m]):.3f} (+/- {np.std(results[m]):.3f})")
+logger.info("="*50)
